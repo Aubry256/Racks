@@ -1,0 +1,55 @@
+# ============================================================
+# RACKS BACKEND — Python Dependencies
+# Install with: pip install -r requirements.txt
+# ============================================================
+
+# Django — the web framework
+# Chosen over Flask because it includes admin panel, ORM,
+# migrations, auth — everything we need without extra packages
+django==4.2.*
+
+# Django REST Framework — turns Django into an API server
+# Adds serializers, viewsets, authentication — saves writing
+# hundreds of lines of boilerplate API code
+djangorestframework==3.15.*
+
+# JWT authentication — JSON Web Tokens
+# Stateless auth — user gets a token on login, sends it with
+# every request. No sessions stored on the server.
+djangorestframework-simplejwt==5.3.*
+
+# CORS headers — allows our Next.js frontend (port 3000) to
+# talk to Django (port 8000) without browser blocking it
+django-cors-headers==4.3.*
+
+# Django Channels — adds WebSocket support to Django
+# This is how we push live order status to the browser
+# HCI Principle 2 — Feedback: real-time updates
+channels==4.0.*
+
+# Daphne — ASGI server that handles both HTTP and WebSockets
+# Regular Django (WSGI) can't handle WebSockets at all
+daphne==4.0.*
+
+# PostgreSQL adapter — connects Django to our PostgreSQL database
+# psycopg2-binary includes compiled C extensions for speed
+psycopg2-binary==2.9.*
+
+# Redis client — for caching and Celery task queue
+# We cache delivery zone lookups and promo prices in Redis
+redis==5.0.*
+
+# Celery — background task queue
+# Runs scheduled jobs: activate promotions every 60 seconds,
+# send order notifications, process webhooks asynchronously
+celery==5.3.*
+
+# HTTP requests — for calling Flutterwave's API
+requests==2.31.*
+
+# Load .env file — reads environment variables from .env file
+# Keeps secrets (API keys, DB passwords) out of the code
+python-dotenv==1.0.*
+
+# Pillow — image processing, needed by Django for ImageField
+Pillow==10.*
