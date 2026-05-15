@@ -20,8 +20,10 @@ import { useState, useEffect } from "react";
 import { createOrder, initiatePayment, getCoveredZones } from "@/lib/api";
 import { useCart } from "@/lib/useCart";
 
-// Uganda mobile number validation — 10 digits starting with 07
-const UGANDA_PHONE_REGEX = /^[7][0-9]{8}$/;
+// Uganda mobile number validation
+// MTN: 076, 077, 078, 039  |  Airtel: 070, 075
+// phoneClean has 256 prepended so we match against 256XXXXXXXXX
+const UGANDA_PHONE_REGEX = /^256(7[045678][0-9]{7}|39[0-9]{7})$/;
 
 interface DeliveryZone {
   free_above: number;
@@ -103,7 +105,9 @@ export default function CheckoutForm({ onSuccess }: Props) {
     if (zone) {
       // Free delivery if order is above free_above threshold
       setDeliveryFee(
-        zone.free_above && total >= zone.free_above ? 0 : zone.delivery_fee,
+        zone.free_above && total >= zone.free_above
+          ? 0
+          : Number(zone.delivery_fee),
       );
     }
   }, [district, zones, total]);
@@ -431,7 +435,7 @@ export default function CheckoutForm({ onSuccess }: Props) {
                   >
                     {phoneValid
                       ? "Valid — we'll send a payment prompt to this number"
-                      : "Enter a valid Uganda number (e.g. 0771234567)"}
+                      : "Valid: MTN (076/077/078/039) or Airtel (070/075)"}
                   </span>
                 </div>
               )}

@@ -392,12 +392,14 @@ export default function RegisterPage() {
                 value={form.phone}
                 onChange={set("phone")}
                 onBlur={blur("phone")}
-                placeholder="0771234567"
+                placeholder="e.g. 0771234567"
                 maxLength={13}
                 autoComplete="tel"
               />
               {touched.phone && form.phone && !phoneOk && (
-                <div style={hint}>Enter a valid Uganda number (07XXXXXXXX)</div>
+                <div style={hint}>
+                  Valid: MTN (076, 077, 078, 039) or Airtel (070, 075)
+                </div>
               )}
               {touched.phone && phoneOk && (
                 <div style={{ ...hint, color: "#66BB6A" }}>
